@@ -27,7 +27,13 @@ module TransilienRealtime
       request += "#{to}/" if to
       @response = HTTP.basic_auth(user: @user, pass: @pwd).headers(accept: ACCEPT_STRINGS[API_VERSION]).get(request)#.body
       @body = @response.body
-      @body.readpartial
+      @content = @body.readpartial
+      self
     end
+
+    def response; @response; end
+    def body; @body; end
+    def content; @content; end
+
   end
 end
