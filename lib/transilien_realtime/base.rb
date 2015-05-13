@@ -1,4 +1,6 @@
-require "http"
+require 'http'
+require 'nokogiri'
+require 'oj'
 
 module TransilienRealtime
   class Base
@@ -22,18 +24,34 @@ module TransilienRealtime
     end
 
     def next(from:, to: nil)
+      fetch(from, to)
+      self
+    end
+
+    def xml
+      return nil unless @content
+      Nokogiri::XML(@content)
+    end
+
+    def json
+      return nil unless @content
+      Oj.load(xml)
+    end
+
+    def response; @response; end
+    def body; @body; end
+    def content; @content; end
+
+    protected
+
+    def fetch(from, to)
       request = API_TARGETS[@target]
       request += "gare/#{from}/depart/"
       request += "#{to}/" if to
       @response = HTTP.basic_auth(user: @user, pass: @pwd).headers(accept: ACCEPT_STRINGS[API_VERSION]).get(request)#.body
       @body = @response.body
       @content = @body.readpartial
-      self
     end
-
-    def response; @response; end
-    def body; @body; end
-    def content; @content; end
 
   end
 end
