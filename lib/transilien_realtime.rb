@@ -1,6 +1,7 @@
 require "transilien_realtime/version"
 require "transilien_realtime/base"
+require "transilien_realtime/train"
 
 module TransilienRealtime
-  # Your code goes here...
+  # maybe some helpers…
 end

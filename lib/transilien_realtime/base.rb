@@ -24,13 +24,18 @@ module TransilienRealtime
     end
 
     def next(from:, to: nil)
-      fetch(from, to)
+      raise ArgumentError, 'from param is mandatory' unless from
+      fetch(build_request(from, to))
       self
     end
 
-    def xml
+    def xml_document
       return nil unless @content
       Nokogiri::XML(@content)
+    end
+
+    def xml
+      @content
     end
 
     def json
@@ -42,12 +47,24 @@ module TransilienRealtime
     def body; @body; end
     def content; @content; end
 
+    def trains
+      @trains ||= begin
+        xml_document.xpath('//train').map do |train_node|
+          Train.from_xml(train_node)
+        end
+      end 
+    end
+
     protected
 
-    def fetch(from, to)
+    def build_request(from, to)
       request = API_TARGETS[@target]
       request += "gare/#{from}/depart/"
       request += "#{to}/" if to
+      request
+    end
+
+    def fetch(request)
       @response = HTTP.basic_auth(user: @user, pass: @pwd).headers(accept: ACCEPT_STRINGS[API_VERSION]).get(request)#.body
       @body = @response.body
       @content = @body.readpartial
