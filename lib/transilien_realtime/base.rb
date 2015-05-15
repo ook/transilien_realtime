@@ -39,8 +39,8 @@ module TransilienRealtime
     end
 
     def json
-      return nil unless @content
-      Oj.load(xml)
+      return nil unless trains
+      trains.map {|t| t.to_json }.to_json
     end
 
     def response; @response; end
@@ -49,6 +49,7 @@ module TransilienRealtime
 
     def trains
       @trains ||= begin
+        return nil unless xml_document
         xml_document.xpath('//train').map do |train_node|
           Train.from_xml(train_node)
         end.freeze

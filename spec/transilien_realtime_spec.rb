@@ -27,6 +27,11 @@ describe TransilienRealtime do
         expect(trb.trains.length).to eq(2)
         expect(trb.trains.all? { |t| t.is_a?(TransilienRealtime::Train) }).to eq(true)
       end
+
+      it 'serialize to_json gently' do
+        trb.trains
+        expect(trb.json).to eq("[{\"mission\":\"GOCA\",\"departure_at\":\"2015-05-14 20:27:00 +0000\",\"numero\":\"137153\",\"terminus\":\"87381244\",\"mode\":null},{\"mission\":\"GOCA\",\"departure_at\":\"2015-05-14 20:27:00 +0000\",\"numero\":\"137153\",\"terminus\":\"87381244\",\"mode\":null}]")
+      end
     end
 
     context 'with faked connections VARPSL' do

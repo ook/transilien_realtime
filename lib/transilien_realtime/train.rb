@@ -23,6 +23,10 @@ module TransilienRealtime
       @terminus = terminus
     end
 
+    def to_json(options={})
+      { mission: mission, departure_at: departure_at, numero: numero, terminus: terminus, mode: mode }
+    end
+
     def <=>(other)
       return 0 if mission == other.mission &&
                   departure_at == other.departure_at &&
