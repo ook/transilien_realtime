@@ -4,6 +4,8 @@ Query SNCF Transilien API Temps Réel to get the next trains from your station, 
 
 Note: you need to request credentials from SNCF Open Data to use this API and so this gem : https://ressources.data.sncf.com/explore/dataset/api-temps-reel-transilien/?tab=metas
 
+[![Build Status](https://travis-ci.org/ook/transilien_realtime.svg)](https://travis-ci.org/ook/transilien_realtime)
+
 ## Installation
 
 Add this line to your application's Gemfile:
