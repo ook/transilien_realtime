@@ -51,7 +51,7 @@ module TransilienRealtime
       @trains ||= begin
         xml_document.xpath('//train').map do |train_node|
           Train.from_xml(train_node)
-        end
+        end.freeze
       end 
     end
 
