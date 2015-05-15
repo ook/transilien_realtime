@@ -44,7 +44,18 @@ describe TransilienRealtime do
 
   describe TransilienRealtime::Train do
     context '.from_xml' do
-      
+      let(:expected_train) do
+        TransilienRealtime::Train.new(
+                                       mission: 'GOCA',
+                                       terminus: '87381244',
+                                       numero: '137153',
+                                       mode: 'R',
+                                       departure_at: Time.new(2015, 5, 14, 20, 27)
+                                     )
+      end
+      let(:train_node) { Nokogiri::XML(PSLVAR).xpath('//train').first }
+      subject { TransilienRealtime::Train }  
+      it { expect(subject.from_xml(train_node)).to eq(expected_train) }
     end
   end
 
