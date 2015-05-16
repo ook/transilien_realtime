@@ -40,7 +40,7 @@ module TransilienRealtime
 
     def json
       return nil unless trains
-      trains.map {|t| t.to_json }.to_json
+      trains.map {|t| t }.to_json
     end
 
     def response; @response; end

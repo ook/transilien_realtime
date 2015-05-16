@@ -30,7 +30,7 @@ describe TransilienRealtime do
 
       it 'serialize to_json gently' do
         trb.trains
-        expect(trb.json).to eq("[{\"mission\":\"GOCA\",\"departure_at\":\"2015-05-14 20:27:00 +0000\",\"numero\":\"137153\",\"terminus\":\"87381244\",\"mode\":null},{\"mission\":\"GOCA\",\"departure_at\":\"2015-05-14 20:27:00 +0000\",\"numero\":\"137153\",\"terminus\":\"87381244\",\"mode\":null}]")
+        expect(trb.json).to eq("[{\"mission\":\"GOCA\",\"departure_at\":\"2015-05-14 20:27:00 +0000\",\"numero\":\"137153\",\"terminus\":\"87381244\",\"mode\":\"realtime\"},{\"mission\":\"GOCA\",\"departure_at\":\"2015-05-14 20:27:00 +0000\",\"numero\":\"137153\",\"terminus\":\"87381244\",\"mode\":\"realtime\"}]")
       end
     end
 
@@ -55,12 +55,18 @@ describe TransilienRealtime do
                                        terminus: '87381244',
                                        numero: '137153',
                                        mode: 'R',
-                                       departure_at: Time.new(2015, 5, 14, 20, 27)
+                                       departure_at: '14/05/2015 20:27'
                                      )
       end
       let(:train_node) { Nokogiri::XML(PSLVAR).xpath('//train').first }
       subject { TransilienRealtime::Train }  
       it { expect(subject.from_xml(train_node)).to eq(expected_train) }
+    end
+
+    context '.to_json' do
+      let(:train_node) { Nokogiri::XML(PSLVAR).xpath('//train')[1] }
+      subject { TransilienRealtime::Train }  
+      it { expect(subject.from_xml(train_node).to_json).to eq('{"mission":"GOCA","departure_at":"2015-05-14 20:27:00 +0000","numero":"137153","terminus":"87381244","mode":"realtime","state":"cancelled"}') }
     end
   end
 
@@ -77,6 +83,7 @@ describe TransilienRealtime do
             <date mode="R">14/05/2015 20:42</date>
             <num>136955</num>
             <miss>MOCA</miss>
+            <etat>S</etat>
             <term>87381509</term>
         </train>
     </passages>
