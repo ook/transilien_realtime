@@ -16,13 +16,13 @@ module TransilienRealtime
     class << self
       def from_xml(xml_node)
         attr = {}
-        attr[:mission] = xml_node.xpath('//miss').first.text
-        attr[:terminus] = xml_node.xpath('//term').first.text
-        attr[:numero] = xml_node.xpath('//num').first.text
-        date_node = xml_node.xpath('//date').first
+        attr[:mission] = xml_node.at_xpath('miss').text
+        attr[:terminus] = xml_node.at_xpath('term').text
+        attr[:numero] = xml_node.at_xpath('num').text
+        date_node = xml_node.at_xpath('date')
         attr[:departure_at] = date_node.text
         attr[:mode] = date_node.attr('mode')
-        etat = date_node.xpath('//etat').first
+        etat = xml_node.at_xpath('etat')
         attr[:state] = etat.text if etat
         train = new(attr).freeze
       end

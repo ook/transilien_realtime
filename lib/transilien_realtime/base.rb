@@ -40,7 +40,7 @@ module TransilienRealtime
 
     def json
       return nil unless trains
-      trains.map {|t| t }.to_json
+      "[#{trains.map(&:to_json).join(',')}]"
     end
 
     def response; @response; end
@@ -50,9 +50,11 @@ module TransilienRealtime
     def trains
       @trains ||= begin
         return nil unless xml_document
-        xml_document.xpath('//train').map do |train_node|
-          Train.from_xml(train_node)
-        end.freeze
+        trains = []
+        xml_document.xpath('//train').each do |train_node|
+          trains << Train.from_xml(train_node)
+        end
+        trains.freeze
       end 
     end
 
