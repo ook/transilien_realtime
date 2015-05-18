@@ -68,6 +68,7 @@ module TransilienRealtime
     end
 
     def fetch(request)
+      @trains = nil # destroy cache
       @response = HTTP.basic_auth(user: @user, pass: @pwd).headers(accept: ACCEPT_STRINGS[API_VERSION]).get(request)#.body
       @body = @response.body
       @content = @body.readpartial
