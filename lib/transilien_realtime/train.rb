@@ -1,4 +1,7 @@
 module TransilienRealtime
+  # Important note about attribute departure_at:
+  # Since it's not possible to have a Time instance w/o timezone, and Europe/Paris change its offset w/ DST,
+  # lie by forcing a false UTC hours
   class Train
     include Comparable
 
@@ -31,7 +34,7 @@ module TransilienRealtime
     def initialize(mission:, departure_at:, terminus:, numero:, mode:, state: nil)
       @mission = mission
       @numero = numero
-      @departure_at = DateTime.strptime(departure_at, '%d/%m/%Y %H:%M').to_time
+      @departure_at = Time.strptime(departure_at + ' +0000', '%d/%m/%Y %H:%M %z')
       @terminus = terminus
       @mode = MODES[mode]
       @state = STATES[state]

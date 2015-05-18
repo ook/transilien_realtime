@@ -41,6 +41,10 @@ tr.trains
 => [#<TransilienRealtime::Train:0x007f945dcc4770 @departure_at=2015-05-15 16:12:00 +0200, @mission="MOCA", @numero="136891", @terminus="87381509">]
 ```
 
+Important note about Train#departure_at:
+
+Since the API doesn't give a timezone and that Europe/Paris offset change according to DST, there's no way to provide a correct Time instance after parsing this partial Date. As a workaround, the time is parsed "as if" and forced into a fake DST, so you can easily shift the date into a timezone of your concern.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
