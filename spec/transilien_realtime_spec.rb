@@ -84,7 +84,7 @@ describe TransilienRealtime do
             <date mode="R">14/05/2015 20:42</date>
             <num>136955</num>
             <miss>MOCA</miss>
-            <etat>S</etat>
+            <etat>Supprimé</etat>
             <term>87381509</term>
         </train>
     </passages>

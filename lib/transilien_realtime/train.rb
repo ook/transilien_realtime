@@ -36,8 +36,8 @@ module TransilienRealtime
       @numero = numero
       @departure_at = Time.strptime(departure_at + ' +0000', '%d/%m/%Y %H:%M %z')
       @terminus = terminus
-      @mode = MODES[mode]
-      @state = STATES[state]
+      @state = state && STATES[state[0]] # SNCF xsd is wrong: say to expect a /^S/ but give 'Supprimé'
+      @mode = mode && MODES[mode[0]] # consider they will be consistant, so wait for /^R/ instead of R
     end
 
     def to_json(options={})
