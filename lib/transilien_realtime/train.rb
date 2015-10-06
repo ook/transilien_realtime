@@ -34,7 +34,7 @@ module TransilienRealtime
     def initialize(mission:, departure_at:, terminus:, numero:, mode:, state: nil)
       @mission = mission
       @numero = numero
-      @departure_at = Time.strptime(departure_at + ' +0000', '%d/%m/%Y %H:%M %z')
+      @departure_at = Time.strptime(departure_at + Time.new.to_s[-6..-1], '%d/%m/%Y %H:%M %z') # Trick to keep offset correct over DST
       @terminus = terminus
       @state = state && STATES[state[0]] # SNCF xsd is wrong: say to expect a /^S/ but give 'Supprimé'
       @mode = mode && MODES[mode[0]] # consider they will be consistant, so wait for /^R/ instead of R

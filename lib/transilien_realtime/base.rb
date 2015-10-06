@@ -52,7 +52,12 @@ module TransilienRealtime
         return nil unless xml_document
         trains = []
         xml_document.xpath('//train').each do |train_node|
-          trains << Train.from_xml(train_node)
+          begin
+            trains << Train.from_xml(train_node)
+          rescue Exception => e
+            $stderr << "FAILURE! WAS READING #{train_node.to_s.inspect}"
+            raise e
+          end
         end
         trains.freeze
       end 
