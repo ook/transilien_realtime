@@ -1,3 +1,5 @@
+* 0.4.1
+  - miss tag can be missing (what an irony) on PSL start
 * 0.4.0
   - departure_at field is parsed in the correct TZ, following DST
   - put down a trace when exception break the parsing
