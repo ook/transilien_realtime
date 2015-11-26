@@ -19,8 +19,8 @@ module TransilienRealtime
     class << self
       def from_xml(xml_node)
         attr = {}
-        attr[:mission] = xml_node.at_xpath('miss').text rescue nil # it appears sometime at PSL there's no mission tag
-        attr[:terminus] = xml_node.at_xpath('term').text
+        attr[:mission] = xml_node.at_xpath('miss').text rescue nil # it appears sometimes at PSL there's no mission tag
+        attr[:terminus] = xml_node.at_xpath('term').text rescue nil # it appears sometimes at PSL there's no mission tag
         attr[:numero] = xml_node.at_xpath('num').text
         date_node = xml_node.at_xpath('date')
         attr[:departure_at] = date_node.text
