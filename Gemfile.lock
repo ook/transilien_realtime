@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    transilien_realtime (0.4.2)
+    transilien_realtime (0.5.1)
       http (~> 3.0)
       nokogiri (~> 1.8.2)
       oj (~> 3.4)
@@ -93,4 +93,4 @@ DEPENDENCIES
   transilien_realtime!
 
 BUNDLED WITH
-   1.16.0
+   1.16.1
